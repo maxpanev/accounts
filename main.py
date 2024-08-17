@@ -1,41 +1,66 @@
-class Bird():
-    def __init__(self, name, voice, color):
-        self.name = name
-        self.voice = voice
-        self.color = color
+class User:
+    def __init__(self, id, username, access):
+        self._id = id
+        self._username = username
+        self._access = access
 
-    def fly(self):
-        print(f"{self.name} летает")
+    def get_id(self):
+        return self._id
 
-    def eat(self):
-        print(f"{self.name} ест")
+    def set_id(self, id):
+        self._id = id
 
-    def sing(self):
-        print(f"{self.name} поёт - {self.voice}")
+    def get_username(self):
+        return self._username
 
-    def info(self):
-        print(f"Имя: {self.name}")
-        print(f"Цвет: {self.color}")
-        print(f"Голос: {self.voice}")
+    def set_username(self, username):
+        self._username = username
 
-class Pigeon(Bird):
-    def __init__(self, name, voice, color, favorite_food):
-        super().__init__(name, voice, color)
-        self.favorite_food = favorite_food
+    def get_access(self):
+        return self._access
 
-    def walk(self):
-        print(f"{self.name} гуляет")
+    def set_access(self, access):
+        self._access = access
 
 
+class Admin(User):
+    def __init__(self, id, username, access, role):
+        super().__init__(id, username, access)
+        self.__role = role
+        self._users = []
 
-bird1 = Pigeon("Гоша", "курлык", "серый", "хлебные крошки")
-bird2 = Bird("Маша", "чирик", "коричневый")
+    # Методы для доступа к role
+    def get_role(self):
+        return self.__role
 
-bird1.sing()
-bird1.info()
-bird1.walk()
+    def set_role(self, role):
+        self.__role = role
+
+    def add_user(self, user):
+        self._users.append(user)
+        print(f"{self.get_username()} добавил пользователя - {user.get_username()}\n")
+
+    def remove_user(self, user):
+        self._users.remove(user)
+        print(f"{self.get_username()} удалил пользователя - {user.get_username()}\n")
+
+    def show_users(self):
+        print(f"Список пользователей в системе:")
+        print(f"ID: {self.get_id()}, Имя: {self.get_username()}, Уровень доступа: {self.get_access()}, Роль: {self.get_role()}")
+        for u in self._users:
+            print(f"ID: {u.get_id()}, Имя: {u.get_username()}, Уровень доступа: {u.get_access()}")
+        print()
 
 
+user1 = User(12345678, "Max", "пользователь")
+user2 = Admin(87654321, "Nick", "администратор", "Администратор системы")
+user3 = User(12348765, "Mark", "пользователь")
 
-
-
+user2.show_users()
+user2.add_user(user1)
+user2.add_user(user3)
+user2.show_users()
+user2.remove_user(user1)
+user3.set_username("Andrew")
+user2.set_role("Менеджер")
+user2.show_users()
