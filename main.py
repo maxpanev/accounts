@@ -1,8 +1,8 @@
 class User:
-    def __init__(self, id, username, access):
+    def __init__(self, id, username):
         self._id = id
         self._username = username
-        self._access = access
+        self._access = "user"
 
     def get_id(self):
         return self._id
@@ -19,15 +19,16 @@ class User:
     def get_access(self):
         return self._access
 
-    def set_access(self, access):
-        self._access = access
-
 
 class Admin(User):
-    def __init__(self, id, username, access, role):
-        super().__init__(id, username, access)
+    def __init__(self, id, username, role):
+        super().__init__(id, username)
+        self._access = "admin"
         self.__role = role
         self._users = []
+
+    def get_access(self):
+        return self._access
 
     # Методы для доступа к role
     def get_role(self):
@@ -52,9 +53,9 @@ class Admin(User):
         print()
 
 
-user1 = User(12345678, "Max", "пользователь")
-user2 = Admin(87654321, "Nick", "администратор", "Администратор системы")
-user3 = User(12348765, "Mark", "пользователь")
+user1 = User(12345678, "Max")
+user2 = Admin(87654321, "Nick", "Администратор системы")
+user3 = User(12348765, "Mark")
 
 user2.show_users()
 user2.add_user(user1)
